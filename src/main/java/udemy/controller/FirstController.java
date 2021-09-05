@@ -2,12 +2,18 @@ package udemy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
+import udemy.ApplicationContextProvider;
 import udemy.dao.EmployeeDAO;
+import udemy.dao.EmployeeDAOImp;
 import udemy.entity.Employee;
 import udemy.service.EmployeeService;
 
@@ -18,12 +24,23 @@ public class FirstController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping("/")
+    @RequestMapping("/all-employees")
     public String showAllEmployees(Model model) {
         List<Employee> allEmployees = employeeService.getAllEmployees();
         model.addAttribute("allEmps", allEmployees);
 
         return "all-employees";
+    }
+
+    @RequestMapping("/")
+    public String show() {
+
+        ApplicationContextProvider context = new ApplicationContextProvider();
+        EmployeeService employeeService = context.getApplicationContext().getBean(EmployeeService.class);
+
+        System.out.println(employeeService);
+
+        return "index";
     }
 
     @RequestMapping("/addNewEmployee")

@@ -23,6 +23,8 @@
 
     <aop:aspectj-autoproxy/>
 
+    <bean id="applicationContextProvider" class="udemy.ApplicationContextProvider"/>
+
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/" />
